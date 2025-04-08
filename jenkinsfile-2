@@ -39,7 +39,7 @@ pipeline {
                         }
                         stage('init'){
                             sh """
-                            terraform init -auto-approve \
+                            terraform apply -auto-approve \
                                 -var "cloud_id=${env.CLOUD_ID}" \
                                 -var "folder_id=${env.FOLDER_ID}" \
                                 -var "token=${env.IAM_TOKEN}"
