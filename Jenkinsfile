@@ -9,7 +9,7 @@ pipeline {
 
         stage('git checout') {
             steps {
-              git branch: 'main', credentialsId: 'github_token', url: 'https://github.com/vladoz77/terraform'
+              git branch: 'main', credentialsId: 'github_token', url: 'https://github.com/vladoz77/jenkins-terraform.git'
             }
         }
         
