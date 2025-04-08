@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    environment {
+        CLOUD_ID = credentials('cloud_id')
+        FOLDER_ID = credentials('folder_id')
+        IAM_TOKEN = credentials('iam_token')
+    }
+    stages {
+        
+        stage('clean ws'){
+            steps {
+                cleanWs()
+            }
+        }
+            
+        stage('git checout') {
+            steps {
+              git branch: 'main', credentialsId: 'github_token', url: 'https://github.com/vladoz77/jenkins-terraform.git'
+            }
+        }
+        
+        stage('init') {
+            steps{
+                sh"""
+                terraform init
+                """
+            }
+        }
+
+        stage('plan') {
+            steps{
+                sh """
+                terraform plan \
+                    -var "cloud_id=${env.CLOUD_ID}" \
+                    -var "folder_id=${env.FOLDER_ID}" \
+                    -var "token=${env.IAM_TOKEN}"
+                """
+            }
+            
+        }
+
+        stage('init'){
+            steps{
+                sh """
+                terraform apply -auto-approve \
+                    -var "cloud_id=${env.CLOUD_ID}" \
+                    -var "folder_id=${env.FOLDER_ID}" \
+                    -var "token=${env.IAM_TOKEN}"
+                """
+            }
+        }
+        
+    }
+}
