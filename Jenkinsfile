@@ -24,7 +24,7 @@ pipeline {
                         vaultString(credentialsId: 'iam_token', variable: 'IAM_TOKEN')
                     ]) 
                     {
-                        '''sh
+                        sh'''
                         terraform init
                         terraform apply -auto-approve \
                             -var "cloud_id=${env.CLOUD_ID}" \
