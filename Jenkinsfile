@@ -2,11 +2,13 @@ pipeline {
     agent any
 
     stages {
-        stage('clean ws')
+        
+        stage('clean ws'){
             step {
                 cleanWs()
             }
-
+        }
+            
         stage('git checout') {
             steps {
               git branch: 'main', credentialsId: 'github_token', url: 'https://github.com/vladoz77/jenkins-terraform.git'
