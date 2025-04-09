@@ -41,12 +41,24 @@ pipeline {
 
         stage('apply'){
             steps{
-                sh """
-                terraform ${action} -auto-approve \
-                    -var "cloud_id=${env.CLOUD_ID}" \
-                    -var "folder_id=${env.FOLDER_ID}" \
-                    -var "token=${env.IAM_TOKEN}"
-                """
+                script{
+                    if (params.action == 'apply') {
+                        sh"""
+                        terraform apply -auto-approve \
+                        -var "cloud_id=${env.CLOUD_ID}" \
+                        -var "folder_id=${env.FOLDER_ID}" \
+                        -var "token=${env.IAM_TOKEN}"
+                        """
+                    } else (params.action == 'destroy') {
+                        sh"""
+                        terraform destroy -auto-approve \
+                        -var "cloud_id=${env.CLOUD_ID}" \
+                        -var "folder_id=${env.FOLDER_ID}" \
+                        -var "token=${env.IAM_TOKEN}"
+                        """
+                    }
+                }
+                
             }
         }
         
