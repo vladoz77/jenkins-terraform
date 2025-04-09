@@ -42,7 +42,7 @@ pipeline {
         stage('apply'){
             steps{
                 script{
-                    if (param.action == 'apply') {
+                    if (params.action == 'apply') {
                         sh"""
                         terraform apply -auto-approve \
                         -var "cloud_id=${env.CLOUD_ID}" \
@@ -51,7 +51,7 @@ pipeline {
                         """
                     }
                     
-                    else (param.action == 'destroy' ) {
+                    else (params.action == 'destroy' ) {
                         sh """
                         terraform destroy -auto-approve \
                             -var "cloud_id=${env.CLOUD_ID}" \
