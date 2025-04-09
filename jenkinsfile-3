@@ -7,11 +7,6 @@ pipeline {
     }
     stages {
         
-        stage('clean ws'){
-            steps {
-                cleanWs()
-            }
-        }
             
         stage('git checout') {
             steps {
