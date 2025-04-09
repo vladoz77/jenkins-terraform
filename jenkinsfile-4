@@ -49,7 +49,7 @@ pipeline {
                         -var "folder_id=${env.FOLDER_ID}" \
                         -var "token=${env.IAM_TOKEN}"
                         """
-                    } else (params.action == 'destroy') {
+                    } else if (params.action == 'destroy') {
                         sh"""
                         terraform destroy -auto-approve \
                         -var "cloud_id=${env.CLOUD_ID}" \
