@@ -37,7 +37,7 @@ pipeline {
         stage('apply'){
             steps{
                 sh """
-                terraform apply -auto-approve \
+                terraform ${action} -auto-approve \
                     -var "cloud_id=${env.CLOUD_ID}" \
                     -var "folder_id=${env.FOLDER_ID}" \
                     -var "token=${env.IAM_TOKEN}"
