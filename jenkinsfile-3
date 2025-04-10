@@ -6,6 +6,10 @@ pipeline {
         IAM_TOKEN = credentials('iam_token')
     }
 
+    parameters {
+        choice choices: ['apply', 'destroy'], description: 'apply or destroy terraform', name: 'action'
+    }
+
     stages {
         
             
