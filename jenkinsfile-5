@@ -7,6 +7,8 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AWS_Access_Key_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_Secret_Access_Key')
         AWS_ENDPOINT_URL = "https://storage.yandexcloud.net"
+        TF_BUCKET_NAME = "vladis-terraform-state"  
+        TF_STATE_KEY = "state.tfstate"  
     }
 
     parameters {
@@ -25,7 +27,12 @@ pipeline {
         stage('init') {
             steps{
                 sh"""
-                terraform init
+                terraform init -reconfigure \
+                    -backend-config="bucket=${TF_BUCKET_NAME}" \
+                    -backend-config="key=${TF_STATE_KEY}" \
+                    -backend-config="endpoint=${AWS_ENDPOINT_URL}" \
+                    -backend-config="skip_region_validation=true" \
+                    -backend-config="skip_credentials_validation=true"
                 """
             }
         }
