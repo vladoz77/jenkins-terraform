@@ -18,7 +18,7 @@ terraform {
     skip_credentials_validation = true
     skip_requesting_account_id  = true # Необходимая опция Terraform для версии 1.6.1 и старше.
     skip_s3_checksum            = true # Необходимая опция при описании бэкенда для Terraform версии 1.6.3 и старше.
-    force_path_style = true
+    use_path_style              = true
 
   }
 
