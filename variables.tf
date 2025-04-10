@@ -9,6 +9,7 @@ variable "folder_id" {
 }
 
 variable "token" {
+  type = string
   description = "yandex cloud token"
 }
 
