@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+    environment {
+        CLOUD_ID = credentials('cloud_id')
+        FOLDER_ID = credentials('folder_id')
+        IAM_TOKEN = credentials('token')
+        AWS_Access_Key_ID = credentials('AWS_Access_Key_ID')
+        AWS_Secret_Access_Key = credentials('AWS_Secret_Access_Key')
+    }
+
+    parameters {
+        choice choices: ['apply', 'destroy'], description: 'apply or destroy terraform', name: 'action'
+    }
+
+    stages {
+        
+            
+        stage('git checout') {
+            steps {
+              git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/vladoz77/jenkins-terraform.git'
+            }
+        }
+        
+        stage('init') {
+            steps{
+                sh"""
+                terraform init
+                """
+            }
+        }
+
+        stage('plan') {
+            steps{
+                sh """
+                terraform plan \
+                    -var "cloud_id=${env.CLOUD_ID}" \
+                    -var "folder_id=${env.FOLDER_ID}" \
+                    -var "token=${env.IAM_TOKEN}"
+                """
+            }
+            
+        }
+
+        stage('apply'){
+            steps{
+                script{
+                    if (params.action == 'apply') {
+                        sh"""
+                        terraform apply -auto-approve \
+                        -var "cloud_id=${env.CLOUD_ID}" \
+                        -var "folder_id=${env.FOLDER_ID}" \
+                        -var "token=${env.IAM_TOKEN}"
+                        """
+                    } else if (params.action == 'destroy') {
+                        sh"""
+                        terraform destroy -auto-approve \
+                        -var "cloud_id=${env.CLOUD_ID}" \
+                        -var "folder_id=${env.FOLDER_ID}" \
+                        -var "token=${env.IAM_TOKEN}"
+                        """
+                    }
+                }
+                
+            }
+        }
+        
+    }
+}
