@@ -3,7 +3,7 @@ pipeline {
     environment {
         CLOUD_ID = credentials('cloud_id')
         FOLDER_ID = credentials('folder_id')
-        IAM_TOKEN = credentials('iam_token')
+        IAM_TOKEN = credentials('token')
     }
 
     parameters {

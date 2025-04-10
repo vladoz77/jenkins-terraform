@@ -21,7 +21,7 @@ pipeline {
                     withCredentials([
                         vaultString(credentialsId: 'cloud_id', variable: 'CLOUD_ID'), 
                         vaultString(credentialsId: 'folder_id', variable: 'FOLDER_ID'), 
-                        vaultString(credentialsId: 'iam_token', variable: 'IAM_TOKEN')
+                        vaultString(credentialsId: 'token', variable: 'IAM_TOKEN')
                     ]) 
                     {
                         stage('init'){
