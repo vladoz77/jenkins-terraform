@@ -30,7 +30,7 @@ pipeline {
                 terraform init -reconfigure \
                     -backend-config="bucket=${TF_BUCKET_NAME}" \
                     -backend-config="key=${TF_STATE_KEY}" \
-                    -backend-config="endpoint=${AWS_ENDPOINT_URL}" \
+                    -backend-config="endpoint.s3=${AWS_ENDPOINT_URL}" \
                     -backend-config="skip_region_validation=true" \
                     -backend-config="skip_credentials_validation=true"
                 """
